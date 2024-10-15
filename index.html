@@ -17,6 +17,8 @@
         <th>Number of Partitions</th>
         <th>All Partitions</th>
         <th>Products of numbers in each partition</th>
+        <th>Highest Product</th>
+        <th>Lowest Product</th>
     </tr>
 </table>
 
@@ -52,11 +54,17 @@
             let partitionsCountCell = newRow.insertCell(1);
             let partitionsCell = newRow.insertCell(2);
             let productsCell = newRow.insertCell(3);
-
+            let highestProduct = Math.max(...products);
+            let lowestProduct = Math.min(...products);
+            let highestProductCell = newRow.insertCell(4);
+            let lowestProductCell = newRow.insertCell(5);
+            
             numberCell.innerHTML = n;
             partitionsCountCell.innerHTML = partitions.length;
             partitionsCell.innerHTML = partitions.map(p => `{${p.join(';')}}`).join(', ');
             productsCell.innerHTML = products.join(', ');
+            highestProductCell.innerHTML = highestProduct;
+            lowestProductCell.innerHTML = lowestProduct;
         }
     }
     window.onload = populateTable;
