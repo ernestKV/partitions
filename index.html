@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+<table border="1" id="partitionsTable">
+    <tr>
+        <th>Number</th>
+        <th>Number of Partitions</th>
+        <th>All Partitions</th>
+        <th>Products of numbers in each partition</th>
+    </tr>
+</table>
+
+<script>
+
+    function generatePartitions(n) {
+        let result = [];
+        function partition(num, max, prefix) {
+            if (num === 0) {
+                result.push(prefix);
+            } else {
+                for (let i = Math.min(max, num); i >= 1; i--) {
+                    partition(num - i, i, prefix.concat(i));
+                }
+            }
+        }
+        partition(n, n, []);
+        return result;
+    }
+
+    function product(arr) {
+        return arr.reduce((acc, val) => acc * val, 1);
+    }
+
+    function populateTable() {
+        const table = document.getElementById('partitionsTable');
+
+        for (let n = 1; n <= 10; n++) {
+            let partitions = generatePartitions(n);
+            let products = partitions.map(product);
+            let newRow = table.insertRow();
+            let numberCell = newRow.insertCell(0);
+            let partitionsCountCell = newRow.insertCell(1);
+            let partitionsCell = newRow.insertCell(2);
+            let productsCell = newRow.insertCell(3);
+
+            numberCell.innerHTML = n;
+            partitionsCountCell.innerHTML = partitions.length;
+            partitionsCell.innerHTML = partitions.map(p => `{${p.join(';')}}`).join(', ');
+            productsCell.innerHTML = products.join(', ');
+        }
+    }
+    window.onload = populateTable;
+</script>
+
+
+</body>
+</html>
